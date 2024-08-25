@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16dp"
+        tools:ignore="UselessParent">
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10dp"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageViewIV"
+                android:layout_width="@dimen/_80dp"
+                android:layout_height="@dimen/_80dp"
+                android:layout_margin="@dimen/_8dp"
+                android:src="@drawable/ic_food"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameTextViewTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8dp"
+                android:textSize="@dimen/_18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:hint="@string/nameEditTextHint"/>
+
+            <TextView
+                android:id="@+id/priceTextViewTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8dp"
+                android:textSize="@dimen/_18sp"
+                android:hint="@string/priceEditTextHint"/>
+
+
+        </LinearLayout>
+        
+    </LinearLayout>
+        
+
+</LinearLayout>

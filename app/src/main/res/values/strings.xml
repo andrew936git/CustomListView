@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CustomListView</string>
+    <string name="textView_text">Магазин продуктов</string>
+    <string name="createButtonText">Создать магазин</string>
+    <string name="exit_menu_text">Выход</string>
+    <string name="nameEditTextHint">Название продукта</string>
+    <string name="priceEditTextHint">Цена продукта</string>
+    <string name="saveButtonText">Сохранить</string>
+</resources>
