@@ -1,12 +1,11 @@
 package com.example.customlistview
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -14,19 +13,24 @@ import android.widget.ListView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import java.io.IOException
 
 
 class SecondActivity : AppCompatActivity() {
 
+    var product: Product? = null
+    private var listAdapter: ListAdapter? = null
+    private var item: Int? = null
+    private var check: Boolean? = null
+
     private val GALLERY_REQUEST = 302
-    private var bitmap: Bitmap? = null
-    private val productsList = mutableListOf<Product>()
+    private var photoUri: Uri? = null
+    private var productsList = mutableListOf<Product>()
 
     private lateinit var toolbar: Toolbar
     private lateinit var listViewLV: ListView
     private lateinit var nameEditTextET: EditText
     private lateinit var priceEditTextET: EditText
+    private lateinit var descriptionEditTextET: EditText
     private lateinit var editImageViewIV: ImageView
     private lateinit var saveButtonBT: Button
 
@@ -44,6 +48,7 @@ class SecondActivity : AppCompatActivity() {
         listViewLV = findViewById(R.id.listViewLV)
         nameEditTextET = findViewById(R.id.nameEditTextET)
         priceEditTextET = findViewById(R.id.priceEditTextET)
+        descriptionEditTextET = findViewById(R.id.descriptionEditTextET)
         editImageViewIV = findViewById(R.id.editImageViewIV)
         saveButtonBT = findViewById(R.id.saveButtonBT)
 
@@ -56,17 +61,45 @@ class SecondActivity : AppCompatActivity() {
         saveButtonBT.setOnClickListener{
             val productName = nameEditTextET.text.toString()
             val productPrice = priceEditTextET.text.toString()
-            val productImage = bitmap
-            val product = Product(productName, productPrice, productImage)
-            productsList.add(product)
+            val productDescription = descriptionEditTextET.text.toString()
+            val productImage = photoUri.toString()
+            product = Product(productName, productPrice, productDescription, productImage)
+            productsList.add(product!!)
 
-            val listAdapter = ListAdapter(this@SecondActivity, productsList)
+            listAdapter = ListAdapter(this@SecondActivity, productsList)
             listViewLV.adapter = listAdapter
-            listAdapter.notifyDataSetChanged()
+            listAdapter!!.notifyDataSetChanged()
+
+            editImageViewIV.setImageResource(R.drawable.ic_food)
+
             nameEditTextET.text.clear()
             priceEditTextET.text.clear()
-            editImageViewIV.setImageResource(R.drawable.ic_food)
+            descriptionEditTextET.text.clear()
+            photoUri = null
         }
+
+        listViewLV.onItemClickListener =
+            AdapterView.OnItemClickListener{ _, _, position, _ ->
+                item = position
+                val product = listAdapter!!.getItem(position)
+                val intent = Intent(this, ProductEditor::class.java)
+                intent.putExtra("product", product)
+                intent.putExtra("productsList", this.productsList as ArrayList<Product>)
+                intent.putExtra("position", item)
+                intent.putExtra("check", check)
+                startActivity(intent)
+            }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        check = intent.extras?.getBoolean("newCheck") ?: true
+        if (!check!!){
+            productsList = intent.getParcelableArrayListExtra("products")!!
+            listAdapter = ListAdapter(this, productsList)
+            check = true
+        }
+        listViewLV.adapter = listAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -85,20 +118,14 @@ class SecondActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         editImageViewIV = findViewById(R.id.editImageViewIV)
         when(requestCode){
             GALLERY_REQUEST -> {
                 if (resultCode === RESULT_OK){
-                    val selectedImage: Uri? = data?.data
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImage)
-                    }catch (e: IOException){
-                        e.printStackTrace()
-                    }
-                    editImageViewIV.setImageBitmap(bitmap)
+                    photoUri = data?.data
+                    editImageViewIV.setImageURI(photoUri)
                 }
             }
         }

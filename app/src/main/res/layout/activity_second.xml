@@ -52,6 +52,14 @@
                 android:hint="@string/priceEditTextHint"
                 tools:ignore="Autofill,TextFields" />
 
+            <EditText
+                android:id="@+id/descriptionEditTextET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/descriptionHintET"
+                tools:ignore="Autofill,TextFields"
+                />
+
         </LinearLayout>
 
     </LinearLayout>

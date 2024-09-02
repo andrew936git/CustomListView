@@ -12,4 +12,7 @@
     <dimen name="_150dp">150dp</dimen>
     <dimen name="_6dp">6dp</dimen>
     <dimen name="_0dp">0dp</dimen>
+    <dimen name="_300dp">300dp</dimen>
+    <dimen name="_180dp">180dp</dimen>
+    <dimen name="_9dp">9dp</dimen>
 </resources>

@@ -6,4 +6,7 @@
     <string name="nameEditTextHint">Название продукта</string>
     <string name="priceEditTextHint">Цена продукта</string>
     <string name="saveButtonText">Сохранить</string>
+    <string name="saveEditButtonText">Сохранить изменения</string>
+    <string name="descriptionHintET">Описание продукта</string>
+    <string name="descriptionETHint">Описание продукта</string>
 </resources>

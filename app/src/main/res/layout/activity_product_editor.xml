@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProductEditor">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarProductEditor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blueViolet"
+        android:layout_margin="@dimen/_6dp"
+        app:titleTextColor="@color/white"
+        tools:ignore="MissingConstraints"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/editImageProductIV"
+        android:layout_width="@dimen/_300dp"
+        android:layout_height="@dimen/_300dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_6dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editNameProductET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/nameEditTextHint"
+            android:layout_margin="@dimen/_9dp"
+            android:layout_weight="2"
+            />
+
+        <EditText
+            android:id="@+id/editPriceProductET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/priceEditTextHint"
+            android:layout_margin="@dimen/_9dp"
+            android:layout_weight="2"
+            />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editDescriptionProductET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_9dp"
+        android:hint="@string/descriptionETHint"
+        />
+
+    <Button
+        android:id="@+id/saveEditButtonBT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saveEditButtonText"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_24sp"
+        />
+
+</LinearLayout>
