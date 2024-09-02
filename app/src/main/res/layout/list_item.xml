@@ -52,6 +52,16 @@
                 android:textSize="@dimen/_18sp"
                 android:hint="@string/priceEditTextHint"/>
 
+            <TextView
+                android:id="@+id/descriptionTextViewTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8dp"
+                android:textSize="@dimen/_18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:hint="@string/descriptionHintET"/>
+
 
         </LinearLayout>
         

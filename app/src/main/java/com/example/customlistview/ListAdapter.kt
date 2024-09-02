@@ -24,10 +24,12 @@ class ListAdapter(context: Context, list: MutableList<Product>):
         val imageViewIV = view?.findViewById<ImageView>(R.id.imageViewIV)
         val nameTextViewTV = view?.findViewById<TextView>(R.id.nameTextViewTV)
         val priceTextViewTV = view?.findViewById<TextView>(R.id.priceTextViewTV)
+        val descriptionTextViewTV = view?.findViewById<TextView>(R.id.descriptionTextViewTV)
 
         imageViewIV?.setImageURI(Uri.parse(product?.image))
         nameTextViewTV?.text = product?.name
         priceTextViewTV?.text = product?.price
+        descriptionTextViewTV?.text = product?.description
         return view!!
     }
 }
