@@ -14,14 +14,14 @@ import androidx.appcompat.widget.Toolbar
 
 class ProductEditor : AppCompatActivity() {
 
+    val GALLERY_REQUEST = 302
+    private var editPhotoUri: Uri? = null
     private lateinit var toolbarProductEditor: Toolbar
     private lateinit var editImageProductIV: ImageView
     private lateinit var editNameProductET: EditText
     private lateinit var editPriceProductET: EditText
     private lateinit var editDescriptionProductET: EditText
-
     private lateinit var saveEditButtonBT: Button
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,29 +44,36 @@ class ProductEditor : AppCompatActivity() {
         val product: Product? = intent?.getParcelableExtra("product")
         val products = intent.getParcelableArrayListExtra<Product>("productsList")
         val item = intent.extras?.getInt("position")
-        var check = intent.extras?.getBoolean("check")
+        var check = 0
 
         val name = product?.name
         val price = product?.price
         val description = product?.description
-        val image: Uri? = Uri.parse(product?.image)
+        editPhotoUri = Uri.parse(product?.image)
 
-        editImageProductIV.setImageURI(image)
+        editImageProductIV.setImageURI(editPhotoUri)
         editNameProductET.setText(name)
         editPriceProductET.setText(price)
         editDescriptionProductET.setText(description)
+
+        editImageProductIV.setOnClickListener{
+            val photoPickerIntent = Intent(Intent.ACTION_PICK)
+            photoPickerIntent.type = "image/*"
+            startActivityForResult(photoPickerIntent, GALLERY_REQUEST)
+        }
+
         saveEditButtonBT.setOnClickListener {
             val newProduct = Product(
                 editNameProductET.text.toString(),
                 editPriceProductET.text.toString(),
                 editDescriptionProductET.text.toString(),
-                product?.image
+                editPhotoUri.toString()
             )
             val productList = products as MutableList<Product>
             if (item != null) {
                 swap(item, newProduct, productList)
             }
-            check = false
+            check = 1
             val intent = Intent(this, SecondActivity::class.java)
             intent.putExtra("products", productList as ArrayList<Product>)
             intent.putExtra("newCheck", check)
@@ -81,18 +88,45 @@ class ProductEditor : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.product_editor_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when (item.itemId) {
             R.id.exit_menu -> {
                 finishAffinity()
                 finish()
             }
+            R.id.back_menu ->{
+                val intentBack = Intent(this, SecondActivity::class.java)
+                val productBack: Product? = intent?.getParcelableExtra("product")
+                val productsBack = intent.getParcelableArrayListExtra<Product>("productsList")
+                val itemBack = intent.extras?.getInt("position")
+
+                swap(itemBack!!, productBack!!, productsBack!!)
+
+                intentBack.putExtra("productsBack", productsBack as ArrayList<Product>)
+                val check = 2
+                intentBack.putExtra("checkBack", check)
+                startActivity(intentBack)
+                finish()
+            }
+
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        editImageProductIV = findViewById(R.id.editImageProductIV)
+        when(requestCode){
+            GALLERY_REQUEST -> {
+                if (resultCode === RESULT_OK){
+                    editPhotoUri = data?.data
+                    editImageProductIV.setImageURI(editPhotoUri)
+                }
+            }
+        }
     }
 }

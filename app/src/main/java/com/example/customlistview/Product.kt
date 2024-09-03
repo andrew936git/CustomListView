@@ -1,13 +1,15 @@
 package com.example.customlistview
 
+
 import android.os.Parcel
 import android.os.Parcelable
+
 
 class Product(
     val name: String?,
     val price: String?,
     val description: String?,
-    val image: String?
+    var image: String?
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),

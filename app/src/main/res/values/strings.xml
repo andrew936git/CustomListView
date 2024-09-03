@@ -9,4 +9,5 @@
     <string name="saveEditButtonText">Сохранить изменения</string>
     <string name="descriptionHintET">Описание продукта</string>
     <string name="descriptionETHint">Описание продукта</string>
+    <string name="menu_back_text">Назад</string>
 </resources>

@@ -14,13 +14,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 
-
 class SecondActivity : AppCompatActivity() {
 
-    var product: Product? = null
+    private var product: Product? = null
     private var listAdapter: ListAdapter? = null
     private var item: Int? = null
-    private var check: Boolean? = null
+    //private var check: Boolean? = null
 
     private val GALLERY_REQUEST = 302
     private var photoUri: Uri? = null
@@ -50,6 +49,7 @@ class SecondActivity : AppCompatActivity() {
         priceEditTextET = findViewById(R.id.priceEditTextET)
         descriptionEditTextET = findViewById(R.id.descriptionEditTextET)
         editImageViewIV = findViewById(R.id.editImageViewIV)
+        editImageViewIV.setImageResource(R.drawable.ic_food)
         saveButtonBT = findViewById(R.id.saveButtonBT)
 
         editImageViewIV.setOnClickListener{
@@ -69,9 +69,7 @@ class SecondActivity : AppCompatActivity() {
             listAdapter = ListAdapter(this@SecondActivity, productsList)
             listViewLV.adapter = listAdapter
             listAdapter!!.notifyDataSetChanged()
-
             editImageViewIV.setImageResource(R.drawable.ic_food)
-
             nameEditTextET.text.clear()
             priceEditTextET.text.clear()
             descriptionEditTextET.text.clear()
@@ -86,18 +84,23 @@ class SecondActivity : AppCompatActivity() {
                 intent.putExtra("product", product)
                 intent.putExtra("productsList", this.productsList as ArrayList<Product>)
                 intent.putExtra("position", item)
-                intent.putExtra("check", check)
+                //intent.putExtra("check", check)
                 startActivity(intent)
             }
     }
 
     override fun onResume() {
         super.onResume()
-        check = intent.extras?.getBoolean("newCheck") ?: true
-        if (!check!!){
+        val check = intent.extras?.getInt("newCheck")
+        val checkBack = intent.extras?.getInt("checkBack")
+        if (check == 1){
             productsList = intent.getParcelableArrayListExtra("products")!!
             listAdapter = ListAdapter(this, productsList)
-            check = true
+
+        }
+        if (checkBack == 2){
+            productsList = intent.getParcelableArrayListExtra("productsBack")!!
+            listAdapter = ListAdapter(this, productsList)
         }
         listViewLV.adapter = listAdapter
     }
@@ -108,7 +111,6 @@ class SecondActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
         when(item.itemId){
             R.id.exit_menu -> {
                 finishAffinity()
