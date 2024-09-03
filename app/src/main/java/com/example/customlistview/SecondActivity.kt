@@ -19,8 +19,6 @@ class SecondActivity : AppCompatActivity() {
     private var product: Product? = null
     private var listAdapter: ListAdapter? = null
     private var item: Int? = null
-    //private var check: Boolean? = null
-
     private val GALLERY_REQUEST = 302
     private var photoUri: Uri? = null
     private var productsList = mutableListOf<Product>()
@@ -84,7 +82,6 @@ class SecondActivity : AppCompatActivity() {
                 intent.putExtra("product", product)
                 intent.putExtra("productsList", this.productsList as ArrayList<Product>)
                 intent.putExtra("position", item)
-                //intent.putExtra("check", check)
                 startActivity(intent)
             }
     }
