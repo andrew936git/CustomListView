@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -95,6 +96,11 @@ class ProductEditor : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.exit_menu -> {
+                Toast.makeText(
+                    applicationContext,
+                    "Программа завершена",
+                    Toast.LENGTH_LONG
+                ).show()
                 finishAffinity()
                 finish()
             }
